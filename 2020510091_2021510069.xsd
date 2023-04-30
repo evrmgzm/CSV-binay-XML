@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<!-- name element and it is the root node -->
+    <xs:element name="records">
+    <!--s a child named row to the records element  -->
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="row" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                        <!--s new child named customer_info to the row element-->
+                            <xs:element name="customer_info">
+                              <xs:complexType>
+                                <xs:sequence>
+                                <!--s a child and adding restriction for right usage  -->
+                                    <xs:element name="name" minOccurs="1" maxOccurs="1">
+                                        <xs:simpleType>
+                                        <!-- name size must be at least 1 and at most 20 length   -->
+                                        <!-- also name type must be string  -->
+                                            <xs:restriction base="xs:string">
+                                            <xs:minLength value="1"/>
+                                            <xs:maxLength value="20"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <!-- new child for costumer info-->
+                                    <xs:element name="surname" minOccurs="1" maxOccurs="1">
+                                        <xs:simpleType>
+                                        <!-- size must be at least 1 and at most 30. also it must be string  -->
+                                            <xs:restriction base="xs:string">
+                                            <xs:minLength value="1"/>
+                                            <xs:maxLength value="30"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <!-- new child for costumer info-->
+                                    <xs:element name="gender">
+                                        <xs:simpleType>
+                                        <!-- it must be (M or F) and string  -->
+                                            <xs:restriction base="xs:string">
+                                            <xs:enumeration value="M" />
+                                            <xs:enumeration value="F" />
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <!-- new child for costumer info-->
+                                    <xs:element name="occupancy" nillable="true" >
+                                        <xs:simpleType>
+                                        <!-- size must be at least 1 and at most 30  -->
+                                            <xs:restriction base="xs:string">
+                                            <!-- it can be empty-->
+                                            <xs:minLength value="0"/>
+                                            <xs:maxLength value="30"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <!-- new child for costumer info-->
+                                    <xs:element name="level_of_education">
+                                        <xs:simpleType>
+                                        <!-- may be one of the values “PhD”, “MSc”, “BSc”, “HS”, or “PS”  -->
+                                            <xs:restriction base="xs:string">
+                                            <xs:enumeration value="HS" />
+                                            <xs:enumeration value="PS" />
+                                            <xs:enumeration value="PhD" />
+                                            <xs:enumeration value="MSc" />
+                                            <xs:enumeration value="BSc" />                                           
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <!-- new child for costumer info-->
+                                     <xs:element name="email" minOccurs="0">
+                                        <xs:simpleType>
+                                        <!-- it can be empty-->
+                                            <xs:restriction base="xs:string">
+                                            <xs:minLength value="0"/>
+                                            <xs:pattern value=".*@(gmail|hotmail|yahoo)\.com|"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                     </xs:element>
+                                </xs:sequence>
+                              </xs:complexType>
+                            </xs:element>
+                            <!-- new child for row element -->
+                              <xs:element name="bank_account_info">
+                                <xs:complexType>
+                                  <xs:sequence>
+                                  <!-- new child for bank acount info  -->
+                                    <xs:element name="bank_account_number">
+                                        <xs:simpleType>
+                                        <!-- starting with 4 digits and ending with 7 digits, separated by a hyphen -->
+                                            <xs:restriction base="xs:string">
+                                            <xs:pattern value="\d{4}-\d{7}"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                        </xs:element>
+                                        <!-- new child for bank acount info  -->
+                                    <xs:element name="IBAN">
+                                        <xs:simpleType>
+                                        <!-- Starting with TR and continuing with 20 digits separated by a space for every four characters  -->
+                                            <xs:restriction base="xs:string">
+                                            <xs:pattern value="TR\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{2}"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                        </xs:element>
+                                        <!-- new child for bank acount info  -->
+                                     <xs:element name="account_type">
+                                        <xs:simpleType>
+                                        <!--s it may be deposit drawing or daily_deposit-->
+                                            <xs:restriction base="xs:string">
+                                            <xs:enumeration value="deposit" />
+                                            <xs:enumeration value="drawing" />
+                                            <xs:enumeration value="daily_deposit" />
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                        </xs:element>
+                                        <!-- new child for bank acount info  -->
+                                     <xs:element name="TotalBalanceAvailable">
+                                        <xs:complexType>
+                                            <xs:simpleContent>
+                                            <!--it must be decimal-->
+                                            <xs:extension base="xs:decimal">
+                                            <!--s it has 2 attribute named currency_unit and bigEnd_Version-->
+                                                <xs:attribute name="currency_unit">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                        <!--currency unit must be €, ₺, $-->
+                                                        <xs:enumeration value="€" />
+                                                        <xs:enumeration value="₺" />
+                                                        <xs:enumeration value="$" />
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                    </xs:attribute>
+                                                  <!--big end version must be string-->   
+                                                <xs:attribute name="bigEnd_Version" type="xs:string"/>
+                                            </xs:extension>
+                                            </xs:simpleContent>
+                                        </xs:complexType>
+                                        </xs:element>   
+                                        <!-- new child for bank acount info  -->                                 
+                                     <xs:element name="AvailableForLoan">
+                                        <xs:simpleType>
+                                         <!--it must be string and also smile face or sad face emojis-->
+                                            <xs:restriction base="xs:string">
+                                             <!--it can contain space or white character for right result-->
+                                            <xs:pattern value="\s*(😊|☹)\s*"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                              </xs:element>
+                        </xs:sequence>
+                         <!--attribute for row node named id -->
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
